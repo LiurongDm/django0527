@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>这里是注册页</title>
+</head>
+<body>
+<form action="{% url "app:register" %}" method="post">
+    {% csrf_token %}
+    <p>
+        账号：<input type="text" name="username" placeholder="输入账号">
+    </p>
+    <p>
+        密码：<input type="password" name="password" placeholder="输出密码">
+    </p>
+    <p>
+        电话号码：<input type="text" name="tel" placeholder="输出电话号码">
+    </p>
+    <input type="submit" value="注册">
+
+</form>
+
+</body>
+</html>
