@@ -3,8 +3,12 @@ from django.shortcuts import render, redirect
 
 
 # Create your views here.
+from App.models import User
+
+
 def index(request):
-    return render(request,'index.html')
+    username = request.COOKIES.get('user','')
+    return render(request,'index.html',context={'user':username})
 
 
 def register(request):
@@ -16,11 +20,20 @@ def register(request):
         tel = request.POST.get('tel')
 
 
+        user = User()
+        user.username = username
+        user.password = password
+        user.tel = tel
+        user.save()
+
+        response = redirect("app:login")
+
+        response.set_cookie("user",username)
+
 
         # return HttpResponse('{}{}{}'.format(username,password,tel))
 
-        return render(request,"index.html")
-
+        return response
 
 def goods(request,num=0):
     return HttpResponse("这里是商品页，这里访问的页码是 {}".format(num))
@@ -66,3 +79,29 @@ def responsetest(request):
 
     response = JsonResponse(str1)
     return response
+
+
+def logout(request):
+    response = HttpResponse("已退出登录")
+    response.delete_cookie('user')
+    return response
+
+
+def login(request):
+    if request.method =='GET':
+        return render(request,"login.html")
+    else:
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        users = User.objects.filter(username=username).filter(password=password)
+        if users.count() > 0:
+            response = redirect("app:index")
+            response.set_cookie("user",username)
+        else:
+            response = HttpResponse("账号或密码错误")
+        return response
+
+
+def show_static(request):
+    return render(request,"show_static.html")

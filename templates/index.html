@@ -5,7 +5,12 @@
     <title>这是app的首页</title>
 </head>
 <body>
-<a href="{% url "app:register" %}">点击这里开始进行注册</a>
-
+{% if user %}
+    <h2>用户：{{ user }},已登录</h2>
+    <a href="{% url "app:logout" %}">退出登录</a>
+{% else %}
+<a href="{% url "app:register" %}">注册</a>
+<a href="{% url "app:login" %}">登录</a>
+{% endif %}
 </body>
 </html>
