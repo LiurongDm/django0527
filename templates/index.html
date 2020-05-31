@@ -3,8 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <title>这是app的首页</title>
+    <style>
+        img{
+            border-radius: 50%;
+            overflow: hidden;
+            width: 200px;
+            height: 200px
+        ;
+        }
+    </style>
 </head>
 <body>
+{% load static %}
 {% if user %}
     <h2>用户：{{ user }},已登录</h2>
     <a href="{% url "app:logout" %}">退出登录</a>
@@ -12,5 +22,28 @@
 <a href="{% url "app:register" %}">注册</a>
 <a href="{% url "app:login" %}">登录</a>
 {% endif %}
+
+
+<form action="/test/" method="post">
+    <input type="text" name="username" placeholder="用户名">
+    <input type="submit" value="抽奖">
+</form>
+
+
+<a href="{% url "App:test_process_request" %}">测试process_request中间键
+</a>
+
+{% if headimg %}
+    <div class="head">
+    <img src="{% static headimg %}">
+</div>
+{% endif %}
+
+<p>
+    <h2>
+<a href="{% url "app:goodlist" %}">点击查看商品</a>
+    </h2>
+</p>
+
 </body>
 </html>

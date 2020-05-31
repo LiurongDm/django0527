@@ -1,14 +1,28 @@
+import os
+
+from django.core.paginator import Paginator
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, redirect
 
 
 # Create your views here.
-from App.models import User
+from App.models import User, Goods
+from django0527 import settings
 
 
 def index(request):
     username = request.COOKIES.get('user','')
-    return render(request,'index.html',context={'user':username})
+    headimg_path = ''
+
+    if username:
+        users = User.objects.values_list("headimg").filter(username=username)
+        # filter(username=username)
+        if users.count():
+            # 获取到数据库中的 头像名称
+            headimg_name = users[0][0]
+            headimg_path = os.path.join('upload',headimg_name)
+
+    return render(request,'index.html',context={'user':username,'headimg':headimg_path})
 
 
 def register(request):
@@ -18,12 +32,21 @@ def register(request):
         username = request.POST.get('username')
         password = request.POST.get('password')
         tel = request.POST.get('tel')
+        headimg = request.FILES.get('headimg')
+        headimg_name = '{}-{}'.format(username,headimg.name)
+
+        filepath = os.path.join(settings.upload_path,headimg_name)
+        # 获取到的头像写到本地
+        with open(filepath,'wb') as f:
+            for i in headimg.chunks():
+                f.write(i)
 
 
         user = User()
         user.username = username
         user.password = password
         user.tel = tel
+        user.headimg = headimg_name
         user.save()
 
         response = redirect("app:login")
@@ -105,3 +128,20 @@ def login(request):
 
 def show_static(request):
     return render(request,"show_static.html")
+
+
+def test_process_request(request):
+    return HttpResponse('测试路由分配的view函数')
+
+
+def goodlist(request,page=1):
+    goodlist = Goods.objects.all()
+    # 对goodlist 所有商品 按每页 5个商品来分页
+    paginator = Paginator(list(goodlist),5)
+    # 获取当前页的商品
+    pageObj = paginator.page(page)
+    # 所有的页码
+    pagelist = pageObj.paginator.page_range
+
+    # 参数为页码，返回该页码的所有商品 + 所有的页码列表
+    return render(request,'goodlist.html',context={'pageObj':pageObj, 'pagelist':pagelist})

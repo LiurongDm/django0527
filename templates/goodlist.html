@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>商品显示页</title>
+</head>
+{#    样式的添加还需要学习#}
+   <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .main{
+            width: 900px;
+            margin: 10px auto;
+        }
+
+        li {
+            list-style: none;
+            border: 1px solid gray;
+            overflow: hidden;
+            padding: 10px;
+            margin: 10px;
+        }
+
+        li .img {
+            float: left;
+            width: 100px;
+            height: 100px;
+            margin-right: 10px;
+        }
+
+        li .content {
+            float: left;
+        }
+
+        li .content p {
+            line-height: 25px;
+        }
+
+        li .content .name {
+            font-weight: 800;
+        }
+
+        li .content .price {
+            color: red;
+        }
+
+        li .content .detail {
+            color: gray;
+        }
+
+        .pageController {
+
+        }
+
+        .pageController a {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            border: 1px solid gray;
+            margin: 5px;
+            text-align: center;
+            line-height: 30px;
+            text-decoration: none;
+        }
+    </style>
+
+<body>
+{#        分页对象的每个商品，用 object_list #}
+<div class="main">
+    <ul>
+      {% for goods in pageObj.object_list %}
+            <li>
+                <div class="img">
+                    <img src="{{ goods.icon }}" alt="">
+                </div>
+
+                <div class="content">
+                    <p class="name"> {{ goods.id }}-{{ goods.name }} </p>
+                    <p class="price"> ￥{{ goods.price }} </p>
+                    <p class="detail"> {{ goods.detail }} </p>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+
+<div class="pageController">
+    {% for item in pagelist %}
+        {% if item == pageObj.number %}
+            <b> {{ item }} </b>
+        {% elif item == None %}
+            <b> ... </b>
+        {% else %}
+           <a href="{% url "app:goodlist" item %}"> {{ item }} </a>
+        {% endif %}
+    {% endfor %}
+</div>
+
+
+
+
+
+
+</body>
+</html>

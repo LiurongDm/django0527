@@ -15,5 +15,10 @@ urlpatterns = [
     path('responsetest', views.responsetest, name='responsetest'),
     path('gettest', views.gettest, name='gettest'),
     path('show_static', views.show_static, name='show_static'),
+    path('test_process_request', views.test_process_request, name='test_process_request'),
+
+
+    path('goodlist', views.goodlist, name='goodlist'),
+    re_path('goodlist/(\d+)', views.goodlist, name='goodlist'),
 
 ]

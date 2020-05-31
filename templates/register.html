@@ -5,7 +5,7 @@
     <title>这里是注册页</title>
 </head>
 <body>
-<form action="{% url "app:register" %}" method="post">
+<form action="{% url "app:register" %}" method="post" enctype="multipart/form-data">
     {% csrf_token %}
     <p>
         账号：<input type="text" name="username" placeholder="输入账号">
@@ -15,6 +15,9 @@
     </p>
     <p>
         电话号码：<input type="text" name="tel" placeholder="输出电话号码">
+    </p>
+    <p>
+        请上传头像：<input type="file" name="headimg" en>
     </p>
     <input type="submit" value="注册">
 
