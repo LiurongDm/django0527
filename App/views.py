@@ -6,7 +6,7 @@ from django.shortcuts import render, redirect
 
 
 # Create your views here.
-from App.models import User, Goods
+from App.models import User, Goods, News
 from django0527 import settings
 
 
@@ -145,3 +145,28 @@ def goodlist(request,page=1):
 
     # 参数为页码，返回该页码的所有商品 + 所有的页码列表
     return render(request,'goodlist.html',context={'pageObj':pageObj, 'pagelist':pagelist})
+
+
+def shownews(request):
+    news = News.objects.all()
+    return render(request,'shownews.html',context={'news':news})
+    # return HttpResponse("新闻详情页")
+
+
+def shownewdetail(request,new_id):
+    new = News.objects.get(pk=int(new_id))
+
+    # return HttpResponse("第{}条新闻".format(new_id))
+    return render(request,'shownewdetail.html',context={"new":new})
+
+
+def addnew(request):
+    if request.method == 'GET':
+        return render(request,'addnew.html')
+    else:
+        new = News()
+        new.title = request.POST.get('title')
+        new.content = request.POST.get('content')
+        new.save()
+        # return redirect("app:shownews")
+        return HttpResponse("tianja")

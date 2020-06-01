@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 # Register your models here.
-from App.models import Goods, student, Grade
+from App.models import Goods, student, Grade, News
 
 
 class GoodsAdmin(admin.ModelAdmin):
@@ -27,9 +27,12 @@ class GradeAdmin(admin.ModelAdmin):
     # 应该该admin时候，自动关联下面类对应的模型数据
     inlines = [StudentInfo]
 
+
+
 admin.site.register(Goods,GoodsAdmin)
 admin.site.register(student)
 admin.site.register(Grade,GradeAdmin)
+admin.site.register(News)
 
 
 

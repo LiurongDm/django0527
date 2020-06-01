@@ -19,6 +19,10 @@ urlpatterns = [
 
 
     path('goodlist', views.goodlist, name='goodlist'),
+    path('addnew', views.addnew, name='addnew'),
+
     re_path('goodlist/(\d+)', views.goodlist, name='goodlist'),
+    re_path('shownews', views.shownews, name='shownews'),
+    re_path('shownewdetail/(\d+)', views.shownewdetail, name='shownewdetail'),
 
 ]

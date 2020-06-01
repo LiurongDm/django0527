@@ -38,8 +38,15 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'App.apps.AppConfig',
+    'tinymce'
 ]
 
+TINYMCE_DEFAULT_CONFIG = {
+    'theme': 'silver',
+    'width': 600,
+    'height': 400
+
+}
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',

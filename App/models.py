@@ -1,6 +1,7 @@
 from django.db import models
-
 # Create your models here.
+from tinymce.models import HTMLField
+
 
 class User(models.Model):
     username = models.CharField(max_length=80)
@@ -39,3 +40,10 @@ class student(models.Model):
     sex = models.CharField(max_length=50)
 
     s_grade = models.ForeignKey(Grade,on_delete='on_delete')
+
+class News(models.Model):
+    title = models.CharField(max_length=250)
+    content = HTMLField()
+
+
+

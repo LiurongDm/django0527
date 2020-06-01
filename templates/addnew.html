@@ -1,0 +1,30 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>添加新闻页</title>
+</head>
+<body>
+
+<script type="text/javascript" src="{% static 'tiny_mce/tiny_mce.js' %}"></script>
+    <script>
+        tinyMCE.init({
+            'mode': 'textareas',
+            'theme': 'advanced',
+            'width': 1000,
+            'height': 500,
+        })
+    </script>
+
+
+<form action="{% url "app:addnew" %}" method="post">
+    {% csrf_token %}
+    <p>title: <input type="text" name="title"></p>
+    <p>detail: <textarea name="content"></textarea></p>
+    <input type="submit" values="添加">
+
+</form>
+
+</body>
+</html>
